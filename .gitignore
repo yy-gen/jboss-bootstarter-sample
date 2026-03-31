@@ -57,18 +57,18 @@ build/
 !.env.example
 
 # Sensitive config override files
-application-local.properties
-application-dev.properties
-application-stg.properties
-application-prod.properties
-application-local.yml
-application-local.yaml
-application-dev.yml
-application-dev.yaml
-application-stg.yml
-application-stg.yaml
-application-prod.yml
-application-prod.yaml
+#application-local.properties
+#application-dev.properties
+#application-stg.properties
+#application-prod.properties
+#application-local.yml
+#application-local.yaml
+#application-dev.yml
+#application-dev.yaml
+#application-stg.yml
+#application-stg.yaml
+#application-prod.yml
+#application-prod.yaml
 
 # If you want to keep profile files in Git, comment out the lines above
 # and manage secrets separately.
