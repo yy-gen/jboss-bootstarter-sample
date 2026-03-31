@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.sample.service.impl.BoardMapper">
+
+	<resultMap id="board" type="egovframework.example.sample.service.BoardVO">
+		<result property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="author" column="author"/>
+		<result property="viewCount" column="view_count"/>
+		<result property="createdAt" column="created_at"/>
+		<result property="updatedAt" column="updated_at"/>
+	</resultMap>
+
+	<insert id="insertBoard">
+
+			INSERT INTO Board (
+				id
+							, title
+							, content
+							, author
+							, view_count
+							, created_at
+							, updated_at
+			 )
+			VALUES (
+				#{id}
+							, #{title}
+							, #{content}
+							, #{author}
+							, #{viewCount}
+							, #{createdAt}
+							, #{updatedAt}
+			 )
+
+	</insert>
+
+	<update id="updateBoard">
+
+			UPDATE Board
+			SET
+				id=#{id}
+				, title=#{title}
+				, content=#{content}
+				, author=#{author}
+				, view_count=#{viewCount}
+				, created_at=#{createdAt}
+				, updated_at=#{updatedAt}
+			WHERE
+				id=#{id}
+
+	</update>
+
+	<delete id="deleteBoard">
+
+			DELETE FROM Board
+			WHERE
+				id=#{id}
+
+	</delete>
+
+	<select id="selectBoard" resultMap="board">
+
+			SELECT
+				id
+				, title
+				, content
+				, author
+				, view_count
+				, created_at
+				, updated_at
+			FROM Board
+			WHERE
+				id = #{id}
+
+	</select>
+
+	<select id="selectBoardList" resultMap="board">
+
+			SELECT
+				id
+				, title
+				, content
+				, author
+				, view_count
+				, created_at
+				, updated_at
+			FROM Board
+			WHERE 1=1
+			<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 0">
+						AND	id LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 1">
+								
+								AND title LIKE '%' || #{searchKeyword} || '%'
+								
+								
+								
+								
+								
+					</when>
+				</choose>
+			</if>
+			ORDER BY id DESC
+			LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+
+	</select>
+
+	<select id="selectBoardListTotCnt" resultType="int">
+
+			SELECT COUNT(*) totcnt
+			FROM Board
+			WHERE 1=1
+			<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 0">
+						AND id LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 1">
+								
+								
+						AND title LIKE '%' || #{searchKeyword} || '%'
+								
+								
+								
+								
+								
+					</when>
+				</choose>
+			</if>
+	</select>
+
+</mapper>

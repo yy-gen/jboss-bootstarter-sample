@@ -1,0 +1,17 @@
+embed-server --std-out=echo
+
+# 패턴 포맷
+/subsystem=logging/pattern-formatter=APP_PATTERN:add(pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %c - %s%e%n")
+
+# 콘솔 핸들러
+/subsystem=logging/console-handler=APP_CONSOLE:add(level=INFO,named-formatter=APP_PATTERN)
+
+# 파일 핸들러 (일 단위 롤링)
+/subsystem=logging/periodic-rotating-file-handler=APP_FILE:add(append=true,suffix=".yyyy-MM-dd",file={"path"=>"app.log","relative-to"=>"jboss.server.log.dir"},named-formatter=APP_PATTERN,level=INFO)
+
+# 애플리케이션 패키지 로거
+/subsystem=logging/logger=egovframework:add(level=DEBUG,handlers=[APP_CONSOLE,APP_FILE],use-parent-handlers=false)
+
+/subsystem=logging/logger=org.springframework:add(level=INFO,handlers=[APP_CONSOLE,APP_FILE],use-parent-handlers=false)
+
+stop-embedded-server
